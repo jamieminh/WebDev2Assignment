@@ -19,8 +19,6 @@ $stations = [
     '447', '459', '463', '481', '500', '501'
 ];
 
-$ignore_counter = 0;
-$lines = 1;
 
 $header = 'siteID,ts,nox,no2,no,pm10,nvpm10,vpm10,nvpm2.5,pm2.5,vpm2.5,co,o3,so2,loc,lat,long';
 
@@ -40,7 +38,6 @@ while ($data = fgets($in_file)) {
     $co = $arr[11];
 
     if (empty($nox) && empty($co)) {                // if both nox and co readings are empty, skip
-        $ignore_counter ++;
         continue;
     }
 
@@ -62,7 +59,6 @@ while ($data = fgets($in_file)) {
 
     // write record into the responding file 
     fwrite(${'data_' . $arr[4]}, "\n" . $write_str);
-    $lines ++;
 }
 
 foreach ($stations as $stationNum) {
@@ -70,9 +66,7 @@ foreach ($stations as $stationNum) {
 }
 
 echo microtime(true) - $st;
-echo ' seconds to get at '. $lines .' lines using fget().</br>';
 
-echo 'Ignored records: '. $ignore_counter . '</br>';
 
 ?>
 
