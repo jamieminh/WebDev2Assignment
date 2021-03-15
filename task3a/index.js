@@ -27,7 +27,7 @@ const monthsInUnix = (year) => {
 }
 
 
-const getAverageNO = async (year) => {
+const getAverageNO = async (year, sttID) => {
     // initialize an empty 2d array representing months and days 12x31
     // number of days for each month doesn't matter, latter when calculating average,
     // we'll skip days that has value=0
@@ -39,7 +39,7 @@ const getAverageNO = async (year) => {
 
     let xmlContent = ''
 
-    await fetch('../data_203.xml')
+    await fetch('../data_' + sttID + '.xml')
         .then(async res => {
             await res.text().then(async xml => {
                 xmlContent = xml
@@ -150,7 +150,8 @@ const drawChartOptions = (readings) => {
 
 const drawScatterChart = async () => {
     const year = document.getElementById('year').value
-    const readings = await getAverageNO(year)
+    const sttID = document.getElementById('station').value
+    const readings = await getAverageNO(year, sttID)
     drawChartOptions(readings)
 }
 

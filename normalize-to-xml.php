@@ -9,7 +9,7 @@ $stations = [
 
 // loop through each station file
 foreach ($stations as $stationNum) {
-    $file = fopen("./data_files/data_$stationNum.csv", "r") or die("Unable to open data_$stationNum.csv!");
+    $file = fopen("data_$stationNum.csv", "r") or die("Unable to open data_$stationNum.csv!");
     fgets($file);  // skip first line
 
     $xml = new XMLWriter();

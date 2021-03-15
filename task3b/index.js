@@ -93,24 +93,6 @@ const drawChartOptions = (readings, date, station) => {
     google.charts.setOnLoadCallback(drawChart(readings, date, station));
 }
 
-const testArr = [
-    [1, 37.8, 34.4, 55.0],
-    [2, null, 69.5, null],
-    [3, null, null, null],
-    [4, null, 18.8, 43.4],
-    [5, null, 17.6, 12.4],
-    [6, null, 13.6, null],
-    [7, null, null, 34.2],
-    [8, null, 29.2, 34.1],
-    [9, null, 42.9, 34.1],
-    [10, null, 30.9, 65.3],
-    [11, null, 7.9, 4.7],
-    [12, null, 8.4, null],
-    [13, null, null, null],
-    [14, 30.8, 6.2, 65.4]
-]
-
-
 const drawLineChart = async () => {
     const stationSelect = document.getElementById('station')
     const stationID = stationSelect.value           // get selected station's id
