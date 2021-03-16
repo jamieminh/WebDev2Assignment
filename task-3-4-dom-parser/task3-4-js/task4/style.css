@@ -1,0 +1,196 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+       #map {
+        height: 80%;
+    }
+    
+    /* Optional: Makes the sample page fill the window. */
+    
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto';
+    }
+    
+    /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader */
+    .loader {
+        display: none;
+        border: 10px solid #4a89ff;
+        border-top: 10px solid transparent;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        top: 30%;
+        left: 46%;
+        transform: translateX(-50%);
+    }
+    
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    /* end source */
+    
+    .current-map-info {
+        width: fit-content;
+        min-height: 40px;
+        position: absolute;
+        background-color: #1FA4DD;
+        color: white;
+        font-weight: 600;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 15px 0;
+        border-radius: 3px;
+        text-align: center;
+    }
+    
+    .modal {
+        width: fit-content;
+        height: fit-content;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%);
+    }
+    
+    .modal-dialog, .modal-content {
+        width: fit-content !important;
+    }
+    
+    div.color-code {
+        margin: 20px auto;
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        position: relative;
+        width: fit-content;
+    }
+    
+    .group {
+        display: flex;
+    }
+    
+    .group>div {
+        width: 50px;
+        height: 15px;
+        background-color: #00bf43;
+    }
+    
+    .group-low {
+        border: 1px solid green;
+    }
+    
+    .group-mod {
+        border: 1px solid rgb(199, 199, 3);
+    }
+    
+    .group-high {
+        border: 1px solid red;
+    }
+    
+    .group-low div.color-2 {
+        background-color: #79ba00;
+    }
+    
+    .group-mod div.color-3 {
+        background-color: #bbc402;
+    }
+    
+    .group-mod div.color-4 {
+        background-color: #c99a00;
+    }
+    
+    .group-high div.color-5 {
+        background-color: #c26800;
+    }
+    
+    .group-high div.color-6 {
+        background-color: #bf2a00;
+    }
+    
+    .group-high div.color-7 {
+        background-color: #bf0083;
+    }
+    
+    div.color-code>p {
+        position: absolute;
+        top: 20px;
+    }
+    
+    div.color-code>p.low {
+        left: 10%;
+    }
+    
+    div.color-code>p.mod {
+        left: 34%;
+    }
+    
+    div.color-code>p.high {
+        left: 75%;
+    }
+    
+    .form {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .form  * {
+        margin: 0 10px;
+        max-height: 30px;
+    }
+    
+    .form > h4 {
+        margin-top: 4px;
+        margin-bottom: 6px;
+    }
+    
+    .form button {
+        outline: none;
+        border: none;
+        color: white;
+        background-color: #1fa4dd;
+        padding: 5px 25px;
+        border-radius: 3px;
+        font-weight: 600;
+    }
+    
+    .form select {
+        outline: none;
+        border: none;
+        background: #5C9CD8;
+        padding: 5px 15px;
+        border-radius: 3px;
+        color: white;
+    }
+    
+    option {
+        margin: 5px;
+    }
+    
+    option.selected {
+        background-color: #1fddae;
+    }
+    
+    div.note {
+        color: #d80f0f;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    @media(min-width: 768px) {
+        .current-map-info {
+            top: 10px;
+        }
+    }

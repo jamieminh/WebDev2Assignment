@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Task 3b: Chart Visualization</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="index.js" type="text/javascript"> </script>
+
+</head>
+
+<body>
+    <!-- <form method="GET" onsubmit="test(this.form)" id="user_form"> -->
+        <label for="station">Select Station</label>
+        <select name="station" id="station">
+            <option value="188">188 - AURN Bristol Centre</option>
+            <option value="203">203 - Brislington Depot</option>
+            <option value="206">206 - Rupert Street</option>
+            <option value="209">209 - IKEA M32</option>
+            <option value="213">213 - Old Market</option>
+            <option value="215">215 - Parson Street School</option>
+            <option value="228">228 - Temple Meads Station</option>
+            <option value="270">270 - Wells Road</option>
+            <option value="271">271 - Trailer Portway P&R</option>
+            <option value="375">375 - Newfoundland Road Police Station</option>
+            <option value="395">395 - Shiner's Garage</option>
+            <option value="452">452 - AURN St Pauls</option>
+            <option value="447">447 - Bath Road</option>
+            <option value="459">459 - Cheltenham Road \ Station Road</option>
+            <option value="463">463 - Fishponds Road</option>
+            <option value="481">481 - CREATE Centre Roof'</option>
+            <option value="500">500 - Temple Way</option>
+            <option value="501">501 - Colston Avenue</option>
+        </select>
+
+        <label for="date">Choose a date: </label>
+        <input type="date" name="date" id="date" min="2015-01-01" max="2019-12-31" value="2015-01-01">
+
+        <button onclick="drawLineChart()" >Submit</button>
+    <!-- </form> -->
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+</body>
+
+</html>
