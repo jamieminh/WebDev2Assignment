@@ -50,7 +50,6 @@ foreach ($ids as $id) {
             $name = str_replace("'", "", $name);
             [$lat, $long] = explode(',', $reader->getAttribute('geocode'));
             $stations[$id] = [$name, floatval($lat), floatval($long)];
-            break;
         }
     }
 

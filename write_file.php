@@ -22,6 +22,7 @@ $stations = [
 
 $header = 'siteID,ts,nox,no2,no,pm10,nvpm10,vpm10,nvpm2.5,pm2.5,vpm2.5,co,o3,so2,loc,lat,long';
 
+// open files for writing
 foreach ($stations as $stationNum) {
     // dynamic variable name (variable variables)
     ${'data_' . $stationNum} = fopen("data_$stationNum.csv", "w") or die("Unable to open data_$stationNum.csv!");
@@ -42,8 +43,7 @@ while ($data = fgets($in_file)) {
     }
 
     // get lat, long from geocode
-    $geo = $arr[18];
-    [$lat, $long] = explode(",", $geo);
+    [$lat, $long] = explode(",", $arr[18]);
 
     // convert to UNIX timestamp (seconds passed since Jan 1st, 1970)
     $datetime = explode("+", $arr[0])[0];           
@@ -55,7 +55,6 @@ while ($data = fgets($in_file)) {
                             array_slice($arr, 5, 9), [$arr[17], $lat, $long]);
 
     $write_str = implode(",", $essential );
-
 
     // write record into the responding file 
     fwrite(${'data_' . $arr[4]}, "\n" . $write_str);

@@ -1,9 +1,9 @@
 <?php
-extract($_GET);
+extract($_POST);
 
 if (isset($drawChart)) {
-    $year = $_GET['year'];
-    $sttId = $_GET['station'];
+    $year = $_POST['year'];
+    $sttId = $_POST['station'];
 } else {
     $year = 2015;
     $sttId = 188;
@@ -31,8 +31,8 @@ function selected($isYear, $val){
 
 </head>
 
-<body>
-    <form method="GET" action="<?php print $_SERVER['PHP_SELF']; ?>" style="text-align: center;">
+<body style="font-family: Roboto;">
+    <form method="POST" action="<?php print $_SERVER['PHP_SELF']; ?>" style="text-align: center;">
         <label for="year">Select Year</label>
         <select name="year" id="year">
             <option value="2015" <?php selected(true, 2015); ?>>2015</option>
@@ -66,7 +66,11 @@ function selected($isYear, $val){
 
         <button name="drawChart" style="margin-left: 20px" >Submit</button>
     </form>
-    <div id="chart_div" style="width: 800px; height: 500px;"></div>
+    <div id="chart_div" style="width: 800px; height: 500px; margin: 0 auto;"></div>
+
+    <div style="text-align: center;">
+        <strong><em style="color: #cf2323"><small>*Empty graph means there was no reading.</small></em></strong>
+    </div>
 </body>
 
 </html>

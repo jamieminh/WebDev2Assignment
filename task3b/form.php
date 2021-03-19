@@ -1,9 +1,9 @@
 <?php
-extract($_GET);
+extract($_POST);
 
 if (isset($drawChart)) {
-    $sttId = $_GET['station'];
-    $date = $_GET['date'];
+    $sttId = $_POST['station'];
+    $date = $_POST['date'];
 } else {
     $sttId = 188;
     $date = '2015-01-01';
@@ -28,7 +28,7 @@ function selected($val)
 </head>
 
 <body style="font-family: Roboto;">
-    <form method="GET" action="<?php print $_SERVER['PHP_SELF']; ?>" style="text-align: center;">
+    <form method="POST" action="<?php print $_SERVER['PHP_SELF']; ?>" style="text-align: center;">
         <label for="station">Select Station</label>
         <select name="station" id="station">
             <option value="188" <?php selected(188); ?>>188 - AURN Bristol Centre</option>
@@ -56,11 +56,13 @@ function selected($val)
 
         <button name="drawChart" style="margin-left: 20px">Submit</button>
     </form>
-    <div style="color: #bd0f0f; font-weight: 600; margin: 20px">
-        <small><em>* An hour with no circle point means the station has no reading for that hour.</em></small> <br>
-        <small><em>* A blank graph means the station has no reading for the date chosen.</em></small>
+
+    <div id="chart_div" style="width: 900px; height: 500px; margin: 0 auto;"></div>
+
+    <div style="color: #bd0f0f; font-weight: 600; text-align: center;">
+        <small><em>* An hour with no circle point means the station had no reading for that hour.</em></small> <br>
+        <small><em>* A blank graph means the station had no reading for the date chosen.</em></small>
     </div>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 
 </html>

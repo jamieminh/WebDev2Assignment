@@ -1,10 +1,10 @@
 <?php
 
-extract($_GET);
+extract($_POST);
 
 if (isset($drawMap)) {
-    $pollutant = $_GET['pollutant'];
-    $year = $_GET['year'];
+    $pollutant = $_POST['pollutant'];
+    $year = $_POST['year'];
 } else {
     $pollutant = 'no';
     $year = '2015';
@@ -91,7 +91,7 @@ function selected($isYear, $val)
     <div class="form">
         <h4>Choose a year and pollutant: </h4>
 
-        <form method="GET" action="<?php print $_SERVER['PHP_SELF']; ?>">
+        <form method="POST" action="<?php print $_SERVER['PHP_SELF']; ?>">
             <select name="year" id="year">
                 <option value="2015" <?php selected(true, 2015); ?>>2015</option>
                 <option value="2016" <?php selected(true, 2016); ?>>2016</option>

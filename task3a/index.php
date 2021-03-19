@@ -89,6 +89,9 @@ function getTimestamp($year, $month)
             title: 'Monthly average NO concentration in the year ' + year + ' measured by station ' + sttId + ', measured in µg/m³',
             hAxis: {
                 title: 'Month',
+                minValue: 1,
+                maxValue: 12,
+                gridlines: {count: 6}
             },
             vAxis: {
                 title: 'Concentration (µg/m³)',
