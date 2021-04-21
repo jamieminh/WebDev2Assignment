@@ -1,8 +1,10 @@
 <?php
 require 'form.php';
 
+// get user input from form.php
 $year = intval($year);
 $id = $sttId;
+$hour = intval($hour);
 
 $reader = new XMLReader();
 $sums = [];
@@ -10,28 +12,29 @@ $results = array_fill(0, 12, 'NaN');    // a 12-item array initialized with NaN 
 $h24 = 24 * 3600;                       // 24 hours in unix time
 
 
-// array contains start of 13 months at 8am in timestamp (Jan -> Dec of $year, and Jan of next year)
+// array contains start of 13 months at $hour in timestamp (Jan -> Dec of $year, and Jan of next year)
 $monthsUnix = [];
 foreach (range(1, 13) as $m) {
-    array_push($monthsUnix, getTimestamp($year, $m));
+    array_push($monthsUnix, getTimestamp($year, $m, $hour));
 }
 
 
 if (!$reader->open("../data_" . $id . ".xml")) {
     die("Failed to open file");
 }
+
+// arrays of 12 elements filled with 0
 $sums = array_fill(0, 12, 0);
 $counts = array_fill(0, 12, 0);
 
 // loop through recs
 while ($reader->read()) {
     if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == 'rec') {
-        // $node = simplexml_import_dom($doc->importNode($reader->expand(), true));
         $ts = intval($reader->getAttribute('ts'));
 
         foreach (range(0, 11) as $m) {
             if ($ts >= $monthsUnix[$m] && $ts < $monthsUnix[$m + 1]) {
-                // if 'ts' is divisible by 'h24', it is at 8am of some day in the month
+                // if 'ts' is divisible by 'h24', then it is at $hour of some day in the month
                 if (($ts - $monthsUnix[$m]) % $h24 === 0) {
                     $sums[$m] += intval($reader->getAttribute('no'));
                     $counts[$m]++;
@@ -53,10 +56,10 @@ foreach ($sums as $index => $sum) {
         array_push($averages, 'NaN');
 }
 
-function getTimestamp($year, $month)
+// get unix time
+function getTimestamp($year, $month, $hour)
 {
-
-    $d = DateTime::createFromFormat("d-m-Y H:i:s", "01-{$month}-{$year} 08:00:00", new DateTimeZone('GMT'));
+    $d = DateTime::createFromFormat("d-m-Y H:i:s", "01-{$month}-{$year} {$hour}:00:00", new DateTimeZone('GMT'));
     return $d->getTimestamp();
 }
 
@@ -67,15 +70,13 @@ function getTimestamp($year, $month)
         'packages': ['corechart']
     });
     let averages = JSON.parse('<?php echo json_encode($averages); ?>');
-    let year = '<?php echo $year; ?>';
-    let sttId = '<?php echo $sttId; ?>';
 
     // setTimeOut for google libraries to load
     setTimeout(() => {
         if (google.visualization != undefined) {
             google.charts.setOnLoadCallback(drawChart());
         }
-    }, 400)
+    }, 600)
 
 
     const drawChart = () => {
@@ -86,12 +87,15 @@ function getTimestamp($year, $month)
         let data = google.visualization.arrayToDataTable(chartData);
 
         var options = {
-            title: 'Monthly average NO concentration in the year ' + year + ' measured by station ' + sttId + ', measured in µg/m³',
+            title: 'Monthly average NO concentration at <?php echo $hour; ?>.00 hours in the year ' +
+                '<?php echo $year; ?> measured by station <?php echo $sttId; ?>, measured in µg/m³',
             hAxis: {
                 title: 'Month',
                 minValue: 1,
                 maxValue: 12,
-                gridlines: {count: 6}
+                gridlines: {
+                    count: 6
+                }
             },
             vAxis: {
                 title: 'Concentration (µg/m³)',

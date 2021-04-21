@@ -11,7 +11,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto';
+    font-family: 'Maven Pro', sans-serif;
 }
 
 
@@ -19,7 +19,7 @@ html, body {
     width: fit-content;
     min-height: 40px;
     position: absolute;
-    background-color: #1FA4DD;
+    background-color: #b31f1f;
     color: white;
     font-weight: 600;
     top: 60px;
@@ -45,7 +45,7 @@ html, body {
 div.color-code {
     margin: 20px auto;
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     justify-content: center;
     position: relative;
     width: fit-content;
@@ -53,65 +53,60 @@ div.color-code {
 
 .group {
     display: flex;
+    flex-flow: row;
 }
 
-.group>div {
-    width: 50px;
-    height: 15px;
-    background-color: #00bf43;
+.group > div {
+    display: flex;
+    flex-flow: row;
+    width: 140px;
 }
 
-.group-low {
-    border: 1px solid green;
+.group > div > div{
+    width: 45%;
+    height: 20px;
+    text-align: center;
 }
 
-.group-mod {
-    border: 1px solid rgb(199, 199, 3);
+.group > div > div > small {
+    font-weight: 500;
+    color: white;
 }
 
-.group-high {
-    border: 1px solid red;
+div.color-0 {
+    background-color: #57CEF3;
 }
 
-.group-low div.color-2 {
+div.color-1 {
+    background-color: #00BF43;
+}
+
+div.color-2 {
     background-color: #79ba00;
 }
 
-.group-mod div.color-3 {
+div.color-3 {
     background-color: #bbc402;
 }
 
-.group-mod div.color-4 {
+div.color-4 {
     background-color: #c99a00;
 }
 
-.group-high div.color-5 {
+div.color-5 {
     background-color: #c26800;
 }
 
-.group-high div.color-6 {
+div.color-6 {
     background-color: #bf2a00;
 }
 
-.group-high div.color-7 {
+div.color-7 {
     background-color: #bf0083;
 }
 
-div.color-code>p {
-    position: absolute;
-    top: 20px;
-}
-
-div.color-code>p.low {
-    left: 10%;
-}
-
-div.color-code>p.mod {
-    left: 34%;
-}
-
-div.color-code>p.high {
-    left: 75%;
+.group>p {
+    margin-left: 40px;
 }
 
 .form {
@@ -158,15 +153,32 @@ option.selected {
     background-color: #1fddae;
 }
 
-div.note {
+div.map-note {
     color: #d80f0f;
     font-weight: 600;
     text-align: center;
     margin-top: 10px;
 }
 
+@media(min-width: 481px) {
+    .group > div > div{
+        width: 50%;
+    }
+}
+
 @media(min-width: 768px) {
     .current-map-info {
         top: 10px;
+    }
+}
+
+@media(min-width: 900px) {
+    div.notes {
+        display: flex;
+        justify-content: center;
+    }
+
+    div.notes > div {
+        width: 40%;
     }
 }

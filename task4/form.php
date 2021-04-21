@@ -16,22 +16,25 @@ function selected($isYear, $val)
     global $year, $pollutant;
     if ($isYear)
         return ($year == $val) ? print("selected") : "";
-    else 
+    else
         return ($pollutant == $val) ? print("selected") : "";
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Task 4: Map Visualisation</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <scrip src="https://polyfill.io/v3/polyfill.min.js?features=default"></scrip>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
@@ -64,55 +67,82 @@ function selected($isYear, $val)
     </div>
     <!-- end source -->
 
-
-    <div class="color-code">
-        <div class="group group-low">
-            <div class="color-1"></div>
-            <div class="color-2"></div>
-        </div>
-
-        <div class="group group-mod">
-            <div class="color-3"></div>
-            <div class="color-4"></div>
-        </div>
-
-        <div class="group group-high">
-            <div class="color-5"></div>
-            <div class="color-6"></div>
-            <div class="color-7"></div>
-        </div>
-
-
-        <p class="low">Low</p>
-        <p class="mod">Moderate</p>
-        <p class="high">High</p>
+    <div class="map-note">
+        <p><em>* Select a marker to see monthly average of that station.</em></p>
     </div>
 
-    <div class="form">
-        <h4>Choose a year and pollutant: </h4>
 
-        <form method="POST" action="<?php print $_SERVER['PHP_SELF']; ?>">
-            <select name="year" id="year">
-                <option value="2015" <?php selected(true, 2015); ?>>2015</option>
-                <option value="2016" <?php selected(true, 2016); ?>>2016</option>
-                <option value="2017" <?php selected(true, 2017); ?>>2017</option>
-                <option value="2018" <?php selected(true, 2018); ?>>2018</option>
-                <option value="2019" <?php selected(true, 2019); ?>>2019</option>
-            </select>
+    <div class="notes">
+        <div class="color-code">
+            <div class="group group-none">
+                <div>
+                    <div class="color-0"></div>
+                </div>
 
-            <select name="pollutant" id="pollutant">
-                <option value="no" <?php selected(false, 'no'); ?> >NO</option>
-                <option value="nox" <?php selected(false, 'nox'); ?>>NOX</option>
-                <option value="no2" <?php selected(false, 'no2'); ?>>NO2</option>
-            </select>
+                <p class="none">No record</p>
+            </div>
 
-            <button name='drawMap'>See</button>
-        </form>
+            <div class="group group-low">
+                <div>
+                    <div class="color-1"><small>0-100</small></div>
+                    <div class="color-2"><small>101-200</small></div>
+                </div>
+
+                <p class="low">Safe</p>
+            </div>
+
+            <div class="group group-low">
+                <div>
+                    <div class="color-3"><small>201-300</small></div>
+                    <div class="color-4"><small>301-400</small></div>
+                </div>
+
+                <p class="mod">Unsafe for sensitive groups</p>
+            </div>
+
+            <div class="group group-high">
+                <div>
+                    <div class="color-5"><small>401-500</small></div>
+                    <div class="color-6"><small>501-600</small></div>
+                </div>
+
+                <p class="high">Unsafe</p>
+            </div>
+
+            <div class="group group-danger">
+                <div>
+                    <div class="color-7"><small>over 600</small></div>
+                </div>
+
+                <p class="danger">Hazardous</p>
+            </div>
+
+        </div>
+
+
+        <div class="form">
+            <h4>Choose a year and pollutant: </h4>
+
+            <form method="POST" action="<?php print $_SERVER['PHP_SELF']; ?>">
+                <select name="year" id="year">
+                    <option value="2015" <?php selected(true, 2015); ?>>2015</option>
+                    <option value="2016" <?php selected(true, 2016); ?>>2016</option>
+                    <option value="2017" <?php selected(true, 2017); ?>>2017</option>
+                    <option value="2018" <?php selected(true, 2018); ?>>2018</option>
+                    <option value="2019" <?php selected(true, 2019); ?>>2019</option>
+                </select>
+
+                <select name="pollutant" id="pollutant">
+                    <option value="no" <?php selected(false, 'no'); ?>>NO</option>
+                    <option value="nox" <?php selected(false, 'nox'); ?>>NOX</option>
+                    <option value="no2" <?php selected(false, 'no2'); ?>>NO2</option>
+                </select>
+
+                <button name='drawMap'>See</button>
+            </form>
+        </div>
     </div>
 
-    <div class="note">
-        <em>* First load of every year-pollutant combination will take some time</em>
-    </div>
 
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->

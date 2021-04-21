@@ -1,3 +1,5 @@
+
+
 <?php
 require 'form.php';
 
@@ -92,13 +94,21 @@ function getTimestamp($year, $month)
 
     // each color correspond to concentration <= 100, 200, 300, 400, 500, 600, 700
     const dangerColors = ['#00bf43', '#79ba00', '#bbc402', '#c99a00', '#c26800', '#bf2a00', '#c20064']
+    
+
+    // each pin correspond to concentration <= 100, 200, 300, 400, 500, 600, over 600 and 'no data'
+    const dangerLevelPins = [
+        '100.png', '200.png', '300.png', '400.png', 
+        '500.png', '600.png', 'over.png', 'none.png'
+    ].map(pin => './assets/pin_' + pin)
+        
 
     async function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: 51.4622796,
                 lng: -2.6031459
-            },      // Bristol Uni as center
+            }, // Bristol Uni as center
             zoom: 12.5,
         });
 
@@ -115,6 +125,14 @@ function getTimestamp($year, $month)
             const [sttName, lat, long] = stations[sttID]
             // console.log(sttID, sttAvg, monthlyAvgs, count);
 
+            var iconUrl = dangerLevelPins[7]
+            if (sttAvg > 0 && sttAvg <=600) {
+                iconUrl = dangerLevelPins[parseInt(Math.floor(sttAvg/100))]
+            }
+            else if (sttAvg > 600) {
+                iconUrl = dangerLevelPins[6]
+            }
+
             // create a new marker
             const marker = new google.maps.Marker({
                 position: {
@@ -125,7 +143,11 @@ function getTimestamp($year, $month)
                 label: {
                     text: sttID,
                     color: 'white',
-                    fontSize: "9px"
+                    fontSize: "11px"
+                },
+                icon: {
+                    url: iconUrl,
+                    scaledSize: new google.maps.Size(30, 46), 
                 },
                 animation: google.maps.Animation.DROP,
                 map: map
@@ -139,18 +161,6 @@ function getTimestamp($year, $month)
                 setTimeout(() => google.charts.setOnLoadCallback(drawColumnChart(monthlyAvgs, sttID)), 150)
             })
 
-            // circle indicate level of concentration 
-            const circle = new google.maps.Circle({
-                map: map,
-                strokeWeight: 0,
-                fillColor: getColor(sttAvg),    // color depends on the average value
-                fillOpacity: 0.45,
-                center: {
-                    lat: lat,
-                    lng: long
-                },
-                radius: 0.1 * count,            // radius is proportional to amount of data collected
-            })
 
         })
     }
