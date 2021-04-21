@@ -45,8 +45,6 @@ function selected($isYear, $val)
         <p id="map-info"></p>
     </div>
 
-
-    <!-- source: https://therichpost.com/open-bootstrap-modal-popup-google-map-marker-click/ -->
     <!-- Modal	 -->
     <div class="modal fade" id="chartModal" role="dialog">
         <div class="modal-dialog">
@@ -65,7 +63,6 @@ function selected($isYear, $val)
             </div>
         </div>
     </div>
-    <!-- end source -->
 
     <div class="map-note">
         <p><em>* Select a marker to see monthly average of that station.</em></p>
