@@ -13,6 +13,7 @@ if (isset($drawChart)) {
     $hour = 0;
 }
 
+// function to set selected option for select inputs
 function selected($variable, $value)
 {
     return ($variable == $value) ? print("selected") : "";
@@ -40,7 +41,8 @@ function selected($variable, $value)
     <div id="chart_div"></div>
 
     <div class="footnote">
-        <strong><em><small>*Empty graph means there was no reading.</small></em></strong>
+        <p><strong><em><small>*Empty graph means there was no reading for that year.</small></em></strong></p>
+        <p><strong><em><small>*Missing point at a month indicate there was no reading at selected hour in that month.</small></em></strong></p>
     </div>
 
     <form method="POST" action="<?php print $_SERVER['PHP_SELF']; ?>">

@@ -69,9 +69,3 @@ echo microtime(true) - $st;
 
 ?>
 
-
-<!-- 
-    total: 1344953
-11.818979978561 seconds to get at 1224856 lines using fget(). (also count last new line)
-Ignored records: 120097 
--->

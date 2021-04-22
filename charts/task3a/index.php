@@ -12,32 +12,36 @@ $results = array_fill(0, 12, 'NaN');    // a 12-item array initialized with NaN 
 $h24 = 24 * 3600;                       // 24 hours in unix time
 
 
-// array contains start of 13 months at $hour in timestamp (Jan -> Dec of $year, and Jan of next year)
+// array contains start of 13 months at $hour in timestamp (Jan 1st-> Dec 1st of $year, and Jan 1st of next year)
 $monthsUnix = [];
 foreach (range(1, 13) as $m) {
     array_push($monthsUnix, getTimestamp($year, $m, $hour));
 }
 
 
-if (!$reader->open("../data_" . $id . ".xml")) {
+if (!$reader->open("../../data_" . $id . ".xml")) {
     die("Failed to open file");
 }
 
-// arrays of 12 elements filled with 0
+// arrays of 12 elements initialised to 0
 $sums = array_fill(0, 12, 0);
 $counts = array_fill(0, 12, 0);
 
-// loop through recs
+// loop through <rec>
 while ($reader->read()) {
     if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == 'rec') {
         $ts = intval($reader->getAttribute('ts'));
 
         foreach (range(0, 11) as $m) {
             if ($ts >= $monthsUnix[$m] && $ts < $monthsUnix[$m + 1]) {
-                // if 'ts' is divisible by 'h24', then it is at $hour of some day in the month
+                // if 'ts-monthUnix[m]' is divisible by 'h24', then it is at $hour of some day in the month
                 if (($ts - $monthsUnix[$m]) % $h24 === 0) {
-                    $sums[$m] += intval($reader->getAttribute('no'));
-                    $counts[$m]++;
+                    $reading = $reader->getAttribute('no');
+                    // only add into arrays if there is a reading (not an empty string)
+                    if ($reading) {
+                        $sums[$m] += floatval($reading);
+                        $counts[$m]++;
+                    }
                     break;
                 }
             }
@@ -88,7 +92,7 @@ function getTimestamp($year, $month, $hour)
 
         var options = {
             title: 'Monthly average NO concentration at <?php echo $hour; ?>.00 hours in the year ' +
-                '<?php echo $year; ?> measured by station <?php echo $sttId; ?>, measured in µg/m³',
+                '<?php echo $year; ?> measured by station <?php echo $sttId; ?>; measured in µg/m³',
             hAxis: {
                 title: 'Month',
                 minValue: 1,

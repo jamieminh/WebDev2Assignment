@@ -20,25 +20,23 @@ foreach ($stations as $stationNum) {
     $firstRec = fgets($file);                       // get the first DATA line to get geocode and name
     $stationInfo = explode(',', $firstRec);         // turn the data string into an array
 
-    // if there are no header (e.g. station 481), go and get name and geocode from the original csv file
+    // if there are no data (e.g. station 481), go and get name and geocode from the original csv file
     if (count($stationInfo) == 1) {                 
-        $id = $stationNum;
         [$name, $geocode] = getNameGeo($stationNum);
     } 
     // else get id, name, and geocode (note: trim the newline at the end)
     else {
-        $id = $stationInfo[0];
         $name = $stationInfo[14];
         $geocode = $stationInfo[15] . ',' . trim($stationInfo[16]);
     }
 
     $xml->startElement('station');                  // open <station > tag
-    $xml->writeAttribute('id', $id);                // write the attributes
+    $xml->writeAttribute('id', $stationNum);        // write the attributes
     $xml->writeAttribute('name', $name);
     $xml->writeAttribute('geocode', $geocode);
 
     rewind($file);                                  // move pointer back to start of file
-    fgets($file);                                   // skip first header line
+    fgets($file);                                   // skip first header line again
 
 
     // loop though data lines 
@@ -65,6 +63,7 @@ foreach ($stations as $stationNum) {
 }
 
 
+// function to get a station name and geocode from the "air-quality-data-2004-2019.csv" (used for station 481)
 function getNameGeo($stationID) {
     $in_file = fopen("air-quality-data-2004-2019.csv", "r") or die("Unable to open file!");
     while ($data = fgets($in_file)) {
@@ -82,9 +81,10 @@ function getNameGeo($stationID) {
     return [$name, $geocode];
 }
 
+// function to remove the last new line
 function removeLastNewLine($stationID) {
     $file = fopen('data_' . $stationID . '.xml', 'r+') or die("can't open: $php_errormsg");
-    fseek($file, -2, SEEK_END);             // place the pointer just before the > of the station tag
+    fseek($file, -2, SEEK_END);             // place the pointer just before the '>' of the station tag
     fwrite($file, '> ');                    // overwrite 2 bytes with a '>' and a space 
     fclose($file);    
 }

@@ -20,7 +20,7 @@ $monthlyAvgAllStation = [];
 
 // get stations info
 foreach ($ids as $id) {
-    if (!$reader->open("../data_" . $id . ".xml")) {
+    if (!$reader->open("../../data_" . $id . ".xml")) {
         die("Failed to open file");
     }
     // array to store sum and data count [sum, count] through 12 months

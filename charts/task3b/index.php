@@ -10,12 +10,12 @@ $dateBegin = DateTime::createFromFormat("Y-m-d H:i:s", "{$date} 00:00:00", new D
 $h24 = 24 * 3600;                       // 24 hours in unix time
 $reader = new XMLReader();
 
-// array to store array of 24 records of 6 stations
+// array to store arrays of 24 hours of 6 stations
 $stationsResults = [];
 
 // open station files
 foreach ($sttIds as $id) {
-    if (!$reader->open("../data_" . $id . ".xml")) {
+    if (!$reader->open("../../data_" . $id . ".xml")) {
         die("Failed to open file");
     }
 
@@ -23,14 +23,14 @@ foreach ($sttIds as $id) {
     $results = array_fill(0, 24, -1);
 
 
-    // loop through recs
+    // loop through <rec>
     while ($reader->read()) {
         if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == 'rec') {
             $ts = intval($reader->getAttribute('ts'));
 
             // if 'ts' is between dateBegin and the next 24 hours (0:00 -> 23:59)
             if ($ts >= $dateBegin && $ts < ($dateBegin + $h24)) {
-                // 3600 is an hour in unix time, if the mod resutl is 0,
+                // 3600 is an hour in unix time, if the modular result is 0,
                 // then the ts was measured at the hour that is the result of division
                 if (($ts - $dateBegin) % 3600 == 0) {
                     $hour = ($ts - $dateBegin) / 3600;      // e.g. if $hour = 3, record is measured at 3am
